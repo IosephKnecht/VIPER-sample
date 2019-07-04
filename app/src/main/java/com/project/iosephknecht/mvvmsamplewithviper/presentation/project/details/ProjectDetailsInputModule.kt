@@ -1,6 +1,6 @@
 package com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.contract.ProjectDetailsContract
 import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.view.ProjectDetailsFragment
 

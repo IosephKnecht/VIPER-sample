@@ -1,7 +1,7 @@
 package com.project.iosephknecht.mvvmsamplewithviper.presentation.project
 
-import android.databinding.BindingAdapter
 import android.view.View
+import androidx.databinding.BindingAdapter
 
 @BindingAdapter("visibleOrGone")
 fun View.setVisibleOrGone(show: Boolean) {

@@ -10,8 +10,8 @@ class ProjectDetailsInteractor(private val githubApiService: GithubApiService) :
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun getProjectDetails(userId: String, projectId: String) {
-        val observable = githubApiService.getProjectDetails(userId, projectId)
+    override fun getProjectDetails(projectId: String, userId: String) {
+        val observable = githubApiService.getProjectDetails(projectId, userId)
 
         compositeDisposable.add(discardResult(observable) { listener, result ->
             listener!!.onObtainProjectDetails(result.data, result.throwable)

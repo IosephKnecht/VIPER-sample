@@ -1,7 +1,7 @@
 package com.project.iosephknecht.mvvmsamplewithviper.presentation
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.project.iosephknecht.mvvmsamplewithviper.R
 import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.list.view.ProjectListFragment
 

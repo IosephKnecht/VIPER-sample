@@ -1,9 +1,9 @@
 package com.project.iosephknecht.mvvmsamplewithviper.presentation.project.list.view.adapter
 
-import android.databinding.DataBindingUtil
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.project.iosephknecht.mvvmsamplewithviper.R
 import com.project.iosephknecht.mvvmsamplewithviper.data.gson.Project
 import com.project.iosephknecht.mvvmsamplewithviper.databinding.ItemProjectListBinding

@@ -1,7 +1,7 @@
 package com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.contract
 
-import android.arch.lifecycle.LiveData
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import com.project.iosephknecht.mvvmsamplewithviper.data.gson.Project
 import com.project.iosephknecht.viper.interacor.MvpInteractor
 import com.project.iosephknecht.viper.presenter.MvpPresenter
@@ -15,8 +15,8 @@ interface ProjectDetailsContract {
         val project: LiveData<Project>
     }
 
-    interface Presenter : MvpPresenter {
-        fun obtainProjectDetails(userId: String, projectId: String)
+    interface Presenter : MvpPresenter, ViewModelObserver {
+        fun obtainProjectDetails(projectId: String, userId: String)
     }
 
     interface Listener : MvpInteractor.Listener {
@@ -24,7 +24,7 @@ interface ProjectDetailsContract {
     }
 
     interface Interactor : MvpInteractor<Listener> {
-        fun getProjectDetails(userId: String, projectId: String)
+        fun getProjectDetails(projectId: String, userId: String)
     }
 
     interface InputModule {

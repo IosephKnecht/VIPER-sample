@@ -5,9 +5,9 @@ import com.project.iosephknecht.mvvmsamplewithviper.application.assembly.*
 
 class AppDelegate : Application() {
 
-    private val HTTPS_API_GITHUB_URL = "https://api.github.com/"
-
     companion object {
+        private const val HTTPS_API_GITHUB_URL = "https://api.github.com/"
+
         lateinit var businessComponent: BusinessComponent
         lateinit var presentationComponent: PresentationComponent
     }
