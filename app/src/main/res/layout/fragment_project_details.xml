@@ -88,7 +88,6 @@
                     android:id="@+id/project_created_at"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Created At"
                     android:textSize="@dimen/project_text"
                     android:text="@{String.format(@string/created_at, viewModel.project.created_at)}"/>
 
@@ -96,7 +95,6 @@
                     android:id="@+id/project_updated_at"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:contentDescription="Updated At"
                     android:textSize="@dimen/project_text"
                     android:text="@{String.format(@string/updated_at, viewModel.project.updated_at)}"/>
 

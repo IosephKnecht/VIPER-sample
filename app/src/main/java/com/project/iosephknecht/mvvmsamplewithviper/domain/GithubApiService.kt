@@ -10,8 +10,8 @@ class GithubApiService(private val githubService: GithubService) {
             .subscribeOn(Schedulers.io())
     }
 
-    fun getProjectDetails(user: String, projectId: String): Observable<Project> {
-        return githubService.getProjectDetails(user, projectId)
+    fun getProjectDetails(projectId: String, userId: String): Observable<Project> {
+        return githubService.getProjectDetails(userId, projectId)
             .subscribeOn(Schedulers.io())
     }
 }
