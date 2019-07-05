@@ -6,7 +6,7 @@ data class User(
     var login: String? = null,
     var id: Long = 0,
     var avatar_url: String? = null,
-    var gravatar_id: String? = null,
+    var avatar_id: String? = null,
     var url: String? = null,
     var html_url: String? = null,
     var followers_url: String? = null,
