@@ -21,6 +21,7 @@ class ProjectListPresenter constructor(private val interactor: ProjectListContra
     override fun attachAndroidComponent(androidComponent: AndroidComponent) {
         super.attachAndroidComponent(androidComponent)
         interactor.setListener(this)
+        router.setListener(this)
 
         if (state == State.IDLE) {
             obtainProjectList("Google")
@@ -29,6 +30,7 @@ class ProjectListPresenter constructor(private val interactor: ProjectListContra
 
     override fun detachAndroidComponent() {
         interactor.setListener(null)
+        router.setListener(null)
         super.detachAndroidComponent()
     }
 
