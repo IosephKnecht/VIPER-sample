@@ -37,7 +37,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
-	implementation "androidx.recyclerview:recyclerview:1.0.0"
+	implementation "androidx.recyclerview:recyclerview:1.1.0"
 	implementation "androidx.cardview:cardview:1.0.0"
 	implementation "androidx.lifecycle:lifecycle-common:$rootProject.ext.lifecycleVersionX"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ext.lifecycleVersionX"
@@ -45,7 +45,7 @@ dependencies {
     implementation project(path: ':viper')
 
     kapt "com.google.dagger:dagger-compiler:$rootProject.ext.daggerVersion"
-    kapt "androidx.databinding:databinding-compiler:3.2.1"
+    kapt "androidx.databinding:databinding-compiler:3.5.3"
 
 	testImplementation "junit:junit:$rootProject.ext.jUnitVersion"
     androidTestImplementation "androidx.test:runner:$rootProject.ext.testRunnerVersionX"
