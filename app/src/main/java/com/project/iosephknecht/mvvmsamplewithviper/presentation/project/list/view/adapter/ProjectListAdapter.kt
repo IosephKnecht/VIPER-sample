@@ -11,7 +11,7 @@ import com.project.iosephknecht.mvvmsamplewithviper.databinding.ItemProjectListB
 class ProjectListAdapter(private val block: ((project: Project) -> Unit)) :
     RecyclerView.Adapter<ProjectListAdapter.ViewHolder>() {
 
-    var projectList = listOf<Project>()
+    private var projectList = listOf<Project>()
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val binding = DataBindingUtil.inflate<ItemProjectListBinding>(
@@ -30,6 +30,11 @@ class ProjectListAdapter(private val block: ((project: Project) -> Unit)) :
             binding.executePendingBindings()
             binding.root.setOnClickListener { block.invoke(projectList[p1]) }
         }
+    }
+
+    fun reload(list: List<Project>) {
+        this.projectList = list
+        notifyDataSetChanged()
     }
 
     class ViewHolder(val binding: ItemProjectListBinding) : RecyclerView.ViewHolder(binding.root)

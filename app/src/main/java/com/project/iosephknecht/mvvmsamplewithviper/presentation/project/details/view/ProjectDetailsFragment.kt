@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.project.iosephknecht.mvvmsamplewithviper.application.AppDelegate
 import com.project.iosephknecht.mvvmsamplewithviper.databinding.FragmentProjectDetailsBinding
@@ -31,7 +32,7 @@ class ProjectDetailsFragment : Fragment() {
 
     @set:Inject
     protected lateinit var viewModel: ProjectDetailsContract.ViewModel
-    private lateinit var binding: FragmentProjectDetailsBinding
+    private var binding = MutableLiveData<FragmentProjectDetailsBinding>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,16 +54,15 @@ class ProjectDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentProjectDetailsBinding.inflate(inflater, container, false)
-
-        return binding.root
+        binding.value = FragmentProjectDetailsBinding.inflate(inflater, container, false)
+        return binding.value!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.managedBy(viewLifecycleOwner)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.value!!.lifecycleOwner = viewLifecycleOwner
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -70,7 +70,7 @@ class ProjectDetailsFragment : Fragment() {
 
         with(viewModel) {
             project.observe(viewLifecycleOwner, Observer { project ->
-                project?.also { binding.project = it }
+                project?.also { binding.value!!.project = it }
             })
 
             toastMsg.observe(viewLifecycleOwner, Observer { message ->
@@ -84,7 +84,7 @@ class ProjectDetailsFragment : Fragment() {
     }
 
     private fun swapLoading(isLoading: Boolean) {
-        with(binding) {
+        with(binding.value!!) {
             loadingProject.visible(isLoading)
             content.visible(!isLoading)
         }
