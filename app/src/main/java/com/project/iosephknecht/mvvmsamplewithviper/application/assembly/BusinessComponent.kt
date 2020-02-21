@@ -9,6 +9,5 @@ import dagger.Component
 @PerBusinessLayerScope
 interface BusinessComponent {
     fun getApplication(): Application
-
     fun getGithubApiService(): GithubApiService
 }

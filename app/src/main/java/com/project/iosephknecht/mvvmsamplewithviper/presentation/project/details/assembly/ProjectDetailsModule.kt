@@ -3,12 +3,11 @@ package com.project.iosephknecht.mvvmsamplewithviper.presentation.project.detail
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.project.iosephknecht.mvvmsamplewithviper.domain.GithubApiService
 import com.project.iosephknecht.mvvmsamplewithviper.presentation.PerFeatureLayerScope
 import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.contract.ProjectDetailsContract
-import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.interactor.ProjectDetailsInteractor
-import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.presenter.ProjectDetailsPresenter
+import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.view.ProjectDetailsFragment
+import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.viewModel.ProjectDetailsViewModel
 import dagger.BindsInstance
 import dagger.Module
 import dagger.Provides
@@ -16,10 +15,12 @@ import dagger.Subcomponent
 import javax.inject.Inject
 import javax.inject.Named
 
+private const val REPO_NAME_NAMED_KEY = "REPO_NAME_NAMED_KEY"
+private const val USER_NAME_NAMED_KEY = "USER_NAME_NAMED_KEY"
+
 @Subcomponent(modules = [ProjectDetailsModule::class])
 @PerFeatureLayerScope
 interface ProjectDetailsComponent {
-    fun getPresenter(): ProjectDetailsContract.Presenter
 
     @Subcomponent.Builder
     interface Builder {
@@ -27,41 +28,44 @@ interface ProjectDetailsComponent {
         fun with(fragment: Fragment): Builder
 
         @BindsInstance
-        fun projectId(@Named("projectId") projectId: String): Builder
+        fun repoName(@Named(REPO_NAME_NAMED_KEY) repoName: String): Builder
 
         @BindsInstance
-        fun userId(@Named("userId") userId: String): Builder
+        fun userName(@Named(USER_NAME_NAMED_KEY) userName: String): Builder
 
         fun build(): ProjectDetailsComponent
     }
+
+    fun inject(fragment: ProjectDetailsFragment)
 }
 
 @Module
 class ProjectDetailsModule {
     @Provides
     @PerFeatureLayerScope
-    fun providePresenter(fragment: Fragment,
-                         factory: ProjectDetailsFactory): ProjectDetailsContract.Presenter {
-        return ViewModelProviders.of(fragment, factory).get(ProjectDetailsPresenter::class.java)
-    }
-
-    @Provides
-    @PerFeatureLayerScope
-    fun provideInteractor(githubApiService: GithubApiService): ProjectDetailsContract.Interactor {
-        return ProjectDetailsInteractor(githubApiService)
+    fun provideViewModel(
+        fragment: Fragment,
+        factory: ProjectDetailsFactory
+    ): ProjectDetailsContract.ViewModel {
+        return ViewModelProvider(fragment, factory).get(ProjectDetailsViewModel::class.java)
     }
 }
 
 @PerFeatureLayerScope
-class ProjectDetailsFactory @Inject constructor(private val interactor: ProjectDetailsContract.Interactor,
-                                                @Named("projectId")
-                                                private val projectId: String,
-                                                @Named("userId")
-                                                private val userId: String)
-    : ViewModelProvider.Factory {
+class ProjectDetailsFactory @Inject constructor(
+    @Named(REPO_NAME_NAMED_KEY)
+    private val repoName: String,
+    @Named(USER_NAME_NAMED_KEY)
+    private val userName: String,
+    private val githubApiService: GithubApiService
+) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ProjectDetailsPresenter(interactor, userId, projectId) as T
+        return ProjectDetailsViewModel(
+            userName = userName,
+            repoName = repoName,
+            githubApiService = githubApiService
+        ) as T
     }
 }

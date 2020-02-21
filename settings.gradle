@@ -1,1 +1,1 @@
-include ':app', ':viper'
+include ':app'

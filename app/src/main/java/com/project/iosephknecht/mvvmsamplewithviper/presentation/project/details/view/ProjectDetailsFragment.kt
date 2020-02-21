@@ -1,66 +1,92 @@
 package com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.project.iosephknecht.mvvmsamplewithviper.R
 import com.project.iosephknecht.mvvmsamplewithviper.application.AppDelegate
 import com.project.iosephknecht.mvvmsamplewithviper.databinding.FragmentProjectDetailsBinding
-import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.assembly.ProjectDetailsComponent
 import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.contract.ProjectDetailsContract
-import com.project.iosephknecht.viper.view.AbstractFragment
+import com.project.iosephknecht.mvvmsamplewithviper.presentation.managedBy
+import com.project.iosephknecht.mvvmsamplewithviper.presentation.visible
+import javax.inject.Inject
 
-class ProjectDetailsFragment : AbstractFragment<ProjectDetailsContract.Presenter>() {
-    private lateinit var diComponent: ProjectDetailsComponent
-    private lateinit var binding: FragmentProjectDetailsBinding
+class ProjectDetailsFragment : Fragment() {
 
     companion object {
-        const val TAG = "project_fragment"
-        private const val USER_ID_KEY = "user_id_key"
-        private const val PROJECT_NAME_KEY = "project_name_key"
+        private const val USER_NAME_KEY = "user_id_key"
+        private const val REPO_NAME_KEY = "project_name_key"
 
-        fun createInstance(userId: String, projectName: String) = ProjectDetailsFragment().apply {
+        fun createInstance(userName: String, repoName: String) = ProjectDetailsFragment().apply {
             arguments = Bundle().apply {
-                putString(USER_ID_KEY, userId)
-                putString(PROJECT_NAME_KEY, projectName)
+                putString(USER_NAME_KEY, userName)
+                putString(REPO_NAME_KEY, repoName)
             }
         }
     }
 
-    override fun inject() {
-        val userId = arguments?.getString(USER_ID_KEY)
-            ?: throw RuntimeException("user id could not be null")
-        val projectId = arguments?.getString(PROJECT_NAME_KEY)
-            ?: throw RuntimeException("project id could not be null")
+    @set:Inject
+    protected lateinit var viewModel: ProjectDetailsContract.ViewModel
+    private lateinit var binding: FragmentProjectDetailsBinding
 
-        diComponent = AppDelegate.presentationComponent
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        val userName = arguments!!.getString(USER_NAME_KEY)!!
+        val repoName = arguments!!.getString(REPO_NAME_KEY)!!
+
+        AppDelegate.presentationComponent
             .projectDetailsSubcomponent()
             .with(this)
-            .projectId(projectId)
-            .userId(userId)
+            .repoName(repoName)
+            .userName(userName)
             .build()
+            .inject(this)
     }
 
-    override fun providePresenter(): ProjectDetailsContract.Presenter = diComponent.getPresenter()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_project_details, container, false)
-        binding.setLifecycleOwner(this)
-
-        binding.viewModel = presenter
-        binding.isLoading = true
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentProjectDetailsBinding.inflate(inflater, container, false)
 
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        presenter.project.observe(viewLifecycleOwner, Observer {
-            if (it != null) binding.isLoading = false
-        })
+        viewModel.managedBy(viewLifecycleOwner)
+        binding.lifecycleOwner = viewLifecycleOwner
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        with(viewModel) {
+            project.observe(viewLifecycleOwner, Observer { project ->
+                project?.also { binding.project = it }
+            })
+
+            toastMsg.observe(viewLifecycleOwner, Observer { message ->
+                message?.also { Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show() }
+            })
+
+            isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
+                isLoading.also { swapLoading(it) }
+            })
+        }
+    }
+
+    private fun swapLoading(isLoading: Boolean) {
+        with(binding) {
+            loadingProject.visible(isLoading)
+            content.visible(!isLoading)
+        }
     }
 }

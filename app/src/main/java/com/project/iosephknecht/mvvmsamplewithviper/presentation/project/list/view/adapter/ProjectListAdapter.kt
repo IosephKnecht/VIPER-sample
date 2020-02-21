@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.project.iosephknecht.mvvmsamplewithviper.R
-import com.project.iosephknecht.mvvmsamplewithviper.data.gson.Project
+import com.project.iosephknecht.mvvmsamplewithviper.data.Project
 import com.project.iosephknecht.mvvmsamplewithviper.databinding.ItemProjectListBinding
 
 class ProjectListAdapter(private val block: ((project: Project) -> Unit)) :

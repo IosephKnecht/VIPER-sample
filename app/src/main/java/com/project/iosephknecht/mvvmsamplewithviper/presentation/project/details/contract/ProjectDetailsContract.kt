@@ -1,33 +1,14 @@
 package com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.contract
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import com.project.iosephknecht.mvvmsamplewithviper.data.gson.Project
-import com.project.iosephknecht.viper.interacor.MvpInteractor
-import com.project.iosephknecht.viper.presenter.MvpPresenter
+import com.project.iosephknecht.mvvmsamplewithviper.data.Project
+import com.project.iosephknecht.mvvmsamplewithviper.presentation.project.common.viewModel.ViewModelArch
 
 interface ProjectDetailsContract {
-    enum class State {
-        IDLE, INIT
-    }
-
-    interface ViewModelObserver {
+    interface ViewModel :
+        ViewModelArch {
         val project: LiveData<Project>
-    }
-
-    interface Presenter : MvpPresenter, ViewModelObserver {
-        fun obtainProjectDetails(projectId: String, userId: String)
-    }
-
-    interface Listener : MvpInteractor.Listener {
-        fun onObtainProjectDetails(project: Project?, throwable: Throwable?)
-    }
-
-    interface Interactor : MvpInteractor<Listener> {
-        fun getProjectDetails(projectId: String, userId: String)
-    }
-
-    interface InputModule {
-        fun createFragment(userId: String, projectId: String): Fragment
+        val isLoading: LiveData<Boolean>
+        val toastMsg: LiveData<String>
     }
 }

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="isLoading" type="boolean"/>
-        <variable name="viewModel"
-                  type="com.project.iosephknecht.mvvmsamplewithviper.presentation.project.details.contract.ProjectDetailsContract.ViewModelObserver"/>
+
+        <variable
+                name="project"
+                type="com.project.iosephknecht.mvvmsamplewithviper.data.Project" />
     </data>
 
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/cardview_light_background">
 
         <TextView
                 android:id="@+id/loading_project"
@@ -19,44 +20,43 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/loading_project"
-                android:textAlignment="center"
-                app:visibleOrGone="@{isLoading}"/>
+                android:textAlignment="center" />
 
         <LinearLayout
-                android:layout_marginStart="@dimen/item_horizontal_margin"
-                android:layout_marginEnd="@dimen/item_horizontal_margin"
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/item_horizontal_margin"
+                android:layout_marginEnd="@dimen/item_horizontal_margin"
                 android:gravity="center_vertical|center_horizontal"
-                android:padding="5dp"
-                android:paddingTop="@dimen/activity_vertical_margin"
                 android:orientation="vertical"
-                app:visibleOrGone="@{!isLoading}">
+                android:padding="5dp"
+                android:paddingTop="@dimen/activity_vertical_margin">
 
             <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="@dimen/logo_width"
                     android:layout_height="@dimen/logo_height"
-                    android:src="@drawable/github"/>
+                    android:src="@drawable/github" />
 
             <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/project_name"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/project_header1"
-                    android:text="@{viewModel.project.name}"
+                    android:paddingBottom="5dp"
+                    android:text="@{project.name}"
                     android:textAlignment="center"
-                    android:paddingBottom="5dp"/>
+                    android:textSize="@dimen/project_header1"
+                    android:textStyle="bold" />
 
             <TextView
                     android:id="@+id/project_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/project_description"
-                    android:textSize="@dimen/project_header2"
-                    android:text="@{viewModel.project.description}"/>
+                    android:text="@{project.description}"
+                    android:textSize="@dimen/project_header2" />
 
 
             <TextView
@@ -64,47 +64,47 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/project_language"
-                    android:textSize="@dimen/project_text"
-                    android:text="@{String.format(@string/languages, viewModel.project.language)}"/>
+                    android:text="@{String.format(@string/languages, project.language)}"
+                    android:textSize="@dimen/project_text" />
 
             <TextView
                     android:id="@+id/project_watchers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/project_watchers"
-                    android:textSize="@dimen/project_text"
-                    android:text="@{String.format(@string/watchers, viewModel.project.watchers)}"/>
+                    android:text="@{String.format(@string/watchers, project.watchers)}"
+                    android:textSize="@dimen/project_text" />
 
             <TextView
                     android:id="@+id/project_open_issues"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/open_issues"
-                    android:textSize="@dimen/project_text"
-                    android:text="@{String.format(@string/openIssues, viewModel.project.open_issues)}"/>
+                    android:text="@{String.format(@string/openIssues, project.open_issues)}"
+                    android:textSize="@dimen/project_text" />
 
 
             <TextView
                     android:id="@+id/project_created_at"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/project_text"
-                    android:text="@{String.format(@string/created_at, viewModel.project.created_at)}"/>
+                    android:text="@{String.format(@string/created_at, project.created_at)}"
+                    android:textSize="@dimen/project_text" />
 
             <TextView
                     android:id="@+id/project_updated_at"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/project_text"
-                    android:text="@{String.format(@string/updated_at, viewModel.project.updated_at)}"/>
+                    android:text="@{String.format(@string/updated_at, project.updated_at)}"
+                    android:textSize="@dimen/project_text" />
 
             <TextView
                     android:id="@+id/clone_url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/open_issues"
-                    android:textSize="@dimen/project_text"
-                    android:text="@{String.format(@string/clone_url, viewModel.project.clone_url)}"/>
+                    android:text="@{String.format(@string/clone_url, project.clone_url)}"
+                    android:textSize="@dimen/project_text" />
 
         </LinearLayout>
 

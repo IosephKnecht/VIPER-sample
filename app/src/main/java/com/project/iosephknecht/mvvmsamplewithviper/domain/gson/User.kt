@@ -1,8 +1,8 @@
-package com.project.iosephknecht.mvvmsamplewithviper.data.gson
+package com.project.iosephknecht.mvvmsamplewithviper.domain.gson
 
 import java.util.*
 
-data class User(
+internal data class User(
     var login: String? = null,
     var id: Long = 0,
     var avatar_url: String? = null,

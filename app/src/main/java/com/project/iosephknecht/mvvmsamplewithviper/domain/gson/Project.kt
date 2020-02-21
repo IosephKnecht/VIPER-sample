@@ -1,8 +1,8 @@
-package com.project.iosephknecht.mvvmsamplewithviper.data.gson
+package com.project.iosephknecht.mvvmsamplewithviper.domain.gson
 
 import java.util.*
 
-data class Project(
+internal data class Project(
     var id: Long = 0,
     var name: String? = null,
     var full_name: String? = null,

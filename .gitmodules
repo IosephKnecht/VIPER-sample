@@ -1,4 +1,0 @@
-[submodule "viper"]
-	path = viper
-	url = https://github.com/IosephKnecht/viper.git
-	branch = master
